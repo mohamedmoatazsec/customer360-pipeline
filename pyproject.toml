@@ -11,7 +11,9 @@ requires-python = ">=3.11"
 dependencies = ["duckdb==1.5.6"]
 
 [project.optional-dependencies]
-dev = ["pytest==9.1.1", "ruff==0.17.1"]
+analytics = ["pandas>=2.2,<4", "openpyxl>=3.1,<4", "matplotlib>=3.8,<4"]
+spark = ["pyspark>=3.5,<4"]
+dev = ["pytest==9.1.1", "ruff==0.17.1", "pandas>=2.2,<4", "openpyxl>=3.1,<4", "matplotlib>=3.8,<4"]
 
 [project.scripts]
 customer360 = "customer360.__main__:main"

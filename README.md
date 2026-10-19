@@ -4,9 +4,11 @@
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-DuckDB-FFF000?logo=duckdb&logoColor=black)
 
-A customer analytics pipeline built with **Python, SQL, DuckDB and Parquet**. It extracts customers, products and shopping carts from a public API, validates them, and publishes customer and category tables only when all quality checks pass.
+A customer analytics pipeline built with **Python, SQL, DuckDB, pandas and PySpark**. It extracts customers, products and shopping carts from a public API, validates them, and publishes customer and category tables only when all quality checks pass — then turns the result into an Excel dashboard and a Power BI–ready star schema.
 
 This is a portfolio project using **DummyJSON's synthetic data**. Carts are shopping baskets, not completed purchases: the outputs describe cart activity and value, not revenue or customer lifetime value.
+
+![Top categories by cart value, from a live snapshot](docs/evidence/dashboard.png)
 
 ## What it demonstrates
 
@@ -15,7 +17,9 @@ This is a portfolio project using **DummyJSON's synthetic data**. Carts are shop
 - SQL joins, common table expressions, aggregates and a window function to select each customer's top category.
 - Monetary values stored as integer cents; 28 SQL checks gate publication.
 - Immutable run folders, a stable input fingerprint and an atomic `current.json` pointer. A bad run leaves the last good snapshot available.
-- Automated tests and CI; a separate, manually triggered workflow checks the real API.
+- The **same gold transform in three engines** — SQL (DuckDB), pandas and PySpark — each cross-checked against one shared expected result, so the logic is proven independent of any single tool.
+- A **pandas BI layer** that publishes an Excel dashboard with native charts, a ranked category chart, and a Power BI–ready star schema.
+- Automated tests and CI; a dedicated workflow runs the PySpark engine, and a separate manual workflow checks the real API.
 
 ## Run it
 
@@ -34,9 +38,15 @@ python -m customer360 run --fixture tests/fixtures/sample.json --output data/dem
 # Current data from the public API:
 python -m customer360 run --output data/live
 
+# Build the Excel dashboard, category chart and Power BI export (pandas engine):
+python -m pip install -e ".[analytics]"
+python -m customer360 report --fixture tests/fixtures/sample.json --output data/report
+
 python -m pytest
 python -m ruff check .
 ```
+
+The `report` command writes `customer360_dashboard.xlsx` (Overview, By segment, By category — each with a native chart), `dashboard.png`, and a `powerbi/` star schema. The PySpark engine is exercised by the `Spark engine` CI workflow; install it locally with `pip install -e ".[spark]"`.
 
 Both commands print a JSON run summary. `data/live/current.json` points to the latest successful run; resolve its `run_dir` relative to `data/live` before reading artifacts. Do not assume the newest directory is a published run.
 
@@ -103,9 +113,23 @@ with duckdb.connect(str(root / run["run_dir"] / "warehouse.duckdb"), read_only=T
 
 See [the recorded live run](docs/evidence/live-run.md) for measured results, [the contracts and design decisions](docs/design.md), and [the operating guide](docs/runbook.md) for failure recovery and the CI workflow.
 
+## Engines and BI
+
+The gold transform is written three ways against one contract:
+
+| Engine | Module | Runs in | Use |
+|---|---|---|---|
+| SQL on DuckDB | `sql/transform.sql` | Default test suite | The production path; also builds the warehouse and runs the 28-check quality gate |
+| pandas | `pandas_transform.py` | Default test suite | Portable in-process reference; feeds the BI layer |
+| PySpark | `spark_transform.py` | `Spark engine` workflow | Databricks-style DataFrame implementation |
+
+`tests/test_engines.py` asserts all three produce identical gold rows from the same bronze
+snapshot. The pandas result feeds `reporting.py`, which publishes the Excel dashboard, the
+category chart above, and the [Power BI star schema](docs/powerbi.md).
+
 ## Scope and limits
 
-This is a small **full-snapshot ELT** implementation. It does not claim incremental CDC, identity resolution across systems, real-time processing, production scale, or a deployed customer data platform. DuckDB makes the SQL and columnar outputs reproducible on a laptop. Databricks, PySpark, Delta Live Tables and Kafka are not used here.
+This is a small **full-snapshot ELT** implementation. It does not claim incremental CDC, identity resolution across systems, real-time processing, production scale, or a deployed customer data platform. DuckDB is the default engine and makes the SQL and columnar outputs reproducible on a laptop. The pandas and PySpark engines are portable reference implementations of the same contract, cross-checked in CI — this is still a laptop-scale project, not a deployed Databricks job, and Delta Live Tables and Kafka are not used.
 
 The bronze layer is already sanitized and normalized; it is not a lossless raw archive. The checked-in fixture reproduces the offline example. Live API data can change, and the provider offers no transactional snapshot across endpoints. A stable total is checked during pagination; it cannot detect every possible source mutation.
 

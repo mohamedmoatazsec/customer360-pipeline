@@ -47,6 +47,27 @@ Re-running the same input produces the same sorted logical rows and `dataset_has
 
 The API has neither a consistent snapshot token nor a reliable cross-endpoint watermark. Total changes, duplicate keys and broken relationships are detected; a same-size source mutation can still slip through. Full snapshots are a practical choice for this small, synthetic source, not a substitute for CDC.
 
+## Three engines, one contract
+
+The gold transform is implemented three times against one specification: SQL on DuckDB
+(`sql/transform.sql`, the default production path), pandas (`pandas_transform.py`) and PySpark
+(`spark_transform.py`). Each reproduces the same grain rules — header-level cart aggregation to
+avoid line fan-out, a line-level `value DESC, category ASC` category preference, zero-filled
+customers without carts, and distinct-cart category counts — and keeps money in integer cents.
+
+`tests/test_engines.py` checks all three against the single expected result pinned for the
+fixture, so they are validated against one truth rather than against each other. The DuckDB and
+pandas engines run in the default suite; the PySpark engine runs in the dedicated `Spark engine`
+workflow (PySpark on Java 17), keeping the offline suite JVM-free. The pandas engine also feeds
+the BI layer (`reporting.py`): an Excel dashboard with native charts, a ranked category chart,
+and a Power BI star-schema export documented in [powerbi.md](powerbi.md).
+
+Writing the same logic three ways is deliberate: it proves the transform is understood
+independently of any one engine, which is exactly what a later move to Databricks requires.
+
 ## Moving this design to Databricks
 
-This section is a design mapping, **not implemented experience**. Python extraction could write to restricted cloud storage; Spark transformations could populate Delta tables, with explicit merge keys and DLT expectations replacing the local gate. A Workflows job would sequence extraction, transformation and publishing. Contact identifiers and consent would require governed access and key management. Incremental ingestion would first need a source change contract or immutable event stream. Adding Kafka without such a source would only add infrastructure.
+The PySpark engine above is a local, tested reference, **not a deployed Databricks job**. In a
+real deployment, Python extraction could write to restricted cloud storage; the Spark
+transformations could populate Delta tables, with explicit merge keys and DLT expectations
+replacing the local gate. A Workflows job would sequence extraction, transformation and publishing. Contact identifiers and consent would require governed access and key management. Incremental ingestion would first need a source change contract or immutable event stream. Adding Kafka without such a source would only add infrastructure.

@@ -11,7 +11,7 @@ A real, read-only run against DummyJSON completed at **2026-10-19T13:41:36.06084
 
 **28/28 SQL checks passed**, with zero failed records under those checks. Pipeline duration: 13.438 seconds.
 
-The accompanying offline suite passed **35 tests** on Python 3.12.14; lint and formatting checks passed. GitHub CI separately checks Python 3.11, 3.12 and 3.13.
+The accompanying offline suite and lint/formatting checks passed on Python 3.12.14. GitHub CI runs the full offline suite on Python 3.11, 3.12 and 3.13, and a separate `Spark engine` workflow cross-checks the PySpark implementation against the SQL and pandas engines.
 
 - [Run manifest](run.json): times, counts, runtime versions, input fingerprint and SQL hashes.
 - [Quality report](quality.json): every check and failure count.

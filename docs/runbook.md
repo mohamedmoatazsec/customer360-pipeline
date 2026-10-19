@@ -7,9 +7,15 @@ Install the project from the README, then run:
 ```sh
 python -m customer360 run --fixture tests/fixtures/sample.json --output data/demo
 python -m customer360 run --output data/live --page-size 50
+python -m customer360 report --fixture tests/fixtures/sample.json --output data/report
 python -m pytest
 python -m ruff check .
 ```
+
+`run` is the quality-gated ELT (DuckDB). `report` builds the BI outputs with the pandas engine
+(`pip install -e ".[analytics]"`): an Excel dashboard, a category chart and a Power BI star
+schema. The PySpark engine needs `pip install -e ".[spark]"` and a JVM; CI runs it in the
+`Spark engine` workflow.
 
 Use one writer per output directory. Keep the destination on a local filesystem. All reads should resolve `current.json`; do not scan for the latest run folder. The command exits zero only after publication, and nonzero on extraction, contract, SQL or export failure.
 
