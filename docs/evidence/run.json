@@ -1,0 +1,141 @@
+{
+  "run_id": "20261019T134122625673Z-cd2881be5bba",
+  "dataset_hash": "7bc00912918900484a16a1fc1dcc60a2bc58832e946456344825e8b30fa5fd6e",
+  "mode": "live",
+  "started_at": "2026-10-19T13:41:22.625673+00:00",
+  "completed_at": "2026-10-19T13:41:36.060847+00:00",
+  "duration_seconds": 13.438,
+  "source": "https://dummyjson.com",
+  "row_counts": {
+    "customers": 208,
+    "products": 194,
+    "carts": 208,
+    "cart_items": 800
+  },
+  "check_count": 28,
+  "checks": [
+    {
+      "check_name": "cart_customer_reference",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_discounted_total_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_item_composite_key",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_primary_key",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_product_count_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_quantity_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_total_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "category_gold_discount_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "category_gold_quantity_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "category_gold_value_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_contact_key_format",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_carts_reconcile",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_discount_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_primary_key",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_quantity_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_value_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_grain_preserved",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_location_present",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_primary_key",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_segment_consistent",
+      "failures": 0
+    },
+    {
+      "check_name": "item_amounts_valid",
+      "failures": 0
+    },
+    {
+      "check_name": "item_cart_reference",
+      "failures": 0
+    },
+    {
+      "check_name": "item_product_reference",
+      "failures": 0
+    },
+    {
+      "check_name": "item_quantity_positive",
+      "failures": 0
+    },
+    {
+      "check_name": "line_discount_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "line_price_times_quantity",
+      "failures": 0
+    },
+    {
+      "check_name": "product_attributes_valid",
+      "failures": 0
+    },
+    {
+      "check_name": "product_primary_key",
+      "failures": 0
+    }
+  ],
+  "run_dir": "runs/20261019T134122625673Z-cd2881be5bba",
+  "status": "passed",
+  "runtime": {
+    "package_version": "1.0.0",
+    "python_version": "3.12.14",
+    "duckdb_version": "1.5.6"
+  },
+  "sql_hashes": {
+    "transform.sql": "263cdfafdfe5d04283670242297640ee2213b84571552490e3b4521a92e822d9",
+    "quality.sql": "f37f1dde06cdfb09d560b3b85cc70653f5a77f25b38f2baba64957ed0115fea7"
+  }
+}

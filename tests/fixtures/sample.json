@@ -1,0 +1,25 @@
+{
+  "users": [
+    {"id": 1, "email": "  FIRST.Customer@Example.test ", "address": {"city": "Cairo", "country": "Egypt", "address": "DO_NOT_PERSIST_STREET_23859"}, "password": "DO_NOT_PERSIST_PASSWORD_23859", "ssn": "DO_NOT_PERSIST_SSN_23859", "bank": {"cardNumber": "DO_NOT_PERSIST_CARD_23859"}},
+    {"id": 2, "email": "second.customer@example.test", "address": {"city": "Alexandria", "country": "Egypt"}},
+    {"id": 3, "email": "third.customer@example.test", "address": {"city": "Giza", "country": "Egypt"}}
+  ],
+  "products": [
+    {"id": 101, "title": "Apple", "category": "groceries", "price": 1.25},
+    {"id": 102, "title": "Notebook", "category": "stationery", "price": 2.50},
+    {"id": 103, "title": "Pen", "category": "stationery", "price": 0.75}
+  ],
+  "carts": [
+    {"id": 11, "userId": 1, "total": 5.00, "discountedTotal": 4.75, "totalProducts": 2, "totalQuantity": 3, "products": [
+      {"id": 101, "price": 1.25, "quantity": 2, "total": 2.50, "discountedTotal": 2.25, "discountPercentage": 10},
+      {"id": 102, "price": 2.50, "quantity": 1, "total": 2.50, "discountedTotal": 2.50, "discountPercentage": 0}
+    ]},
+    {"id": 12, "userId": 1, "total": 5.00, "discountedTotal": 5.00, "totalProducts": 2, "totalQuantity": 3, "products": [
+      {"id": 101, "price": 1.25, "quantity": 2, "total": 2.50, "discountedTotal": 2.50, "discountPercentage": 0},
+      {"id": 102, "price": 2.50, "quantity": 1, "total": 2.50, "discountedTotal": 2.50, "discountPercentage": 0}
+    ]},
+    {"id": 13, "userId": 2, "total": 3.00, "discountedTotal": 2.85, "totalProducts": 1, "totalQuantity": 4, "products": [
+      {"id": 103, "price": 0.75, "quantity": 4, "total": 3.00, "discountedTotal": 2.85, "discountPercentage": 5}
+    ]}
+  ]
+}

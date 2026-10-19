@@ -1,0 +1,118 @@
+{
+  "status": "passed",
+  "check_count": 28,
+  "checks": [
+    {
+      "check_name": "cart_customer_reference",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_discounted_total_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_item_composite_key",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_primary_key",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_product_count_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_quantity_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "cart_total_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "category_gold_discount_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "category_gold_quantity_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "category_gold_value_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_contact_key_format",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_carts_reconcile",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_discount_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_primary_key",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_quantity_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_gold_value_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_grain_preserved",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_location_present",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_primary_key",
+      "failures": 0
+    },
+    {
+      "check_name": "customer_segment_consistent",
+      "failures": 0
+    },
+    {
+      "check_name": "item_amounts_valid",
+      "failures": 0
+    },
+    {
+      "check_name": "item_cart_reference",
+      "failures": 0
+    },
+    {
+      "check_name": "item_product_reference",
+      "failures": 0
+    },
+    {
+      "check_name": "item_quantity_positive",
+      "failures": 0
+    },
+    {
+      "check_name": "line_discount_reconciles",
+      "failures": 0
+    },
+    {
+      "check_name": "line_price_times_quantity",
+      "failures": 0
+    },
+    {
+      "check_name": "product_attributes_valid",
+      "failures": 0
+    },
+    {
+      "check_name": "product_primary_key",
+      "failures": 0
+    }
+  ]
+}
